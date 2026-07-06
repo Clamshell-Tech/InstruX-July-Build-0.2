@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -10,9 +10,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'slide object with type is required' }, { status: 400 });
     }
 
-    const knowledge = await retrieveKnowledge(
-      `microlearning ${slide.type} card: ${slide.heading || slide.title || ''}, course: ${courseTitle}`
-    );
+    const knowledge = KB_CONTEXT;
 
     const systemPrompt = `You are InstruX, a Senior Instructional Designer specializing in premium Mobile Microlearning.
 Regenerate a single improved slide of the SAME TYPE as the input. Make it more engaging, clearer, and more visually dynamic.
@@ -59,8 +57,8 @@ ${JSON.stringify(slide, null, 2)}
 
 Return ONLY the improved JSON object for this single slide.`;
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.85,
       max_tokens: 1200,
       response_format: { type: 'json_object' },

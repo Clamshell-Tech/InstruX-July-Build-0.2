@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -9,10 +9,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Source content is required' }, { status: 400 });
     }
 
-    // Retrieve relevant ID methodology for gap analysis
-    const knowledge = await retrieveKnowledge(
-      `SME interview questions gap analysis: ${gap}`
-    );
+    const knowledge = KB_CONTEXT;
 
     const systemPrompt = `You are a senior instructional designer with 25 years experience.
 Analyse the source content provided and identify knowledge gaps.
@@ -38,8 +35,8 @@ Return ONLY valid JSON:
   ]
 }`;
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.5,
       response_format: { type: "json_object" },
       messages: [

@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, getSupabase } from '../../../lib/ai';
-import { randomUUID } from 'crypto';
 
 export async function POST(request) {
+  // Image generation disabled — slides use CSS patterns instead (zero cost)
+  return NextResponse.json({ imageUrl: null });
+
   try {
     const { visualPrompt, visualStyle, slideTitle, brandKitId } = await request.json();
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import mammoth from 'mammoth';
-import { getOpenAI } from '../../../lib/ai.js';
+import { getGroq } from '../../../lib/ai.js';
 
 // Zero-dependency PDF image extractor — scans binary for embedded JPEG/PNG streams.
 // Covers scanned PDFs (JPEG pages) and PDFs with embedded images.
@@ -189,14 +189,14 @@ async function extractPptxImages(buffer) {
   return images;
 }
 
-// Vision-based OCR using GPT-4o — no native binaries needed
+// Vision-based OCR using Groq vision model — no native binaries needed
 async function ocrImages(images) {
-  const openai = getOpenAI();
+  const groq = getGroq();
   const results = [];
   for (const img of images.slice(0, 10)) { // cap at 10 images to control cost
     try {
-      const res = await openai.chat.completions.create({
-        model: 'gpt-4o',
+      const res = await groq.chat.completions.create({
+        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
         max_tokens: 1500,
         messages: [{
           role: 'user',
@@ -207,7 +207,7 @@ async function ocrImages(images) {
             },
             {
               type: 'image_url',
-              image_url: { url: `data:${img.mimeType};base64,${img.base64}`, detail: 'high' }
+              image_url: { url: `data:${img.mimeType};base64,${img.base64}` }
             }
           ]
         }]
@@ -318,12 +318,12 @@ export async function POST(request) {
     const words = text.split(/\s+/).filter(w => w.length > 0).length;
     const readingMins = Math.max(1, Math.round(words / 200));
 
-    // AI domain detection — gpt-4o-mini, very cheap (~$0.00002 per call)
+    // AI domain detection — Groq llama-3.1-8b-instant (free, fast)
     let domain = 'General';
     try {
       const snap = text.substring(0, 1500);
-      const res = await getOpenAI().chat.completions.create({
-        model: 'gpt-4o-mini',
+      const res = await getGroq().chat.completions.create({
+        model: 'llama-3.1-8b-instant',
         temperature: 0,
         max_tokens: 15,
         messages: [

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai.js';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai.js';
 
 export const maxDuration = 60;
 
@@ -21,9 +21,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Text content required' }, { status: 400, headers: CORS });
     }
 
-    const knowledge = await retrieveKnowledge(
-      `content extraction analysis gap identification: ${text.substring(0, 200)}`
-    );
+    const knowledge = KB_CONTEXT;
 
     const systemPrompt = `You are a Senior Instructional Designer performing a rigorous content audit before building a training course.
 Your ONLY job is to extract what is EXPLICITLY stated in the source content — never infer, never hallucinate, never add general knowledge.
@@ -81,14 +79,14 @@ Return ONLY valid JSON — no markdown, no explanation outside the JSON object.`
       });
     }
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0,
       max_tokens: 2500,
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: userParts.length > 1 ? userParts : userParts[0].text }
+        { role: 'user', content: userParts[0].text }
       ]
     });
 

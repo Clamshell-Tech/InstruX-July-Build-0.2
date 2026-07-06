@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -10,10 +10,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'modules array is required' }, { status: 400 });
     }
 
-    // RAG: pull relevant ID methodology
-    const knowledge = await retrieveKnowledge(
-      `microlearning course design: ${title}, strategy: ${strategy}, bloom level: ${bloomLevel}, learner: ${learner}, gap: ${gap}`
-    );
+    const knowledge = KB_CONTEXT;
 
     const systemPrompt = `You are InstruX, a Senior Instructional Designer and Art Director specializing in premium Mobile Microlearning (like 7taps).
 Your goal is to build a 5–10 minute card deck that is visually dynamic and engaging.
@@ -148,8 +145,8 @@ ${modulesText}
 Generate all slides following the structure: cover → objectives → [module-title → content slides → flipcards → quiz] × ${modules.length} → summary.
 Return ONLY the JSON array.`;
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.7,
       max_tokens: 7000,
       response_format: { type: "json_object" },

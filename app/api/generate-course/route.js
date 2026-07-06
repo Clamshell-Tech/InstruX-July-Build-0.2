@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -9,10 +9,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
 
-    // RAG: retrieve relevant ID methodology from knowledge base
-    const knowledge = await retrieveKnowledge(
-      `course design for: ${prompt}, goal: ${learningGoal}`
-    );
+    const knowledge = KB_CONTEXT;
 
     const systemPrompt = `You are InstruX, an expert AI instructional designer trained on professional ID methodology.
 
@@ -117,8 +114,8 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
   ]
 }`;
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.7,
       response_format: { type: "json_object" },
       messages: [

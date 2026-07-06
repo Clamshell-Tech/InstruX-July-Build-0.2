@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOpenAI, retrieveKnowledge } from '../../../lib/ai';
+import { getGroq, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -13,10 +13,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Strategy is required' }, { status: 400 });
     }
 
-    // Retrieve methodology specific to the chosen strategy
-    const knowledge = await retrieveKnowledge(
-      `learning map design ${strategy} strategy Bloom's Kirkpatrick module mapping SOURCE 11`
-    );
+    const knowledge = KB_CONTEXT;
 
     const smeContext = smeAnswers && smeAnswers.length > 0
       ? `\nSME answers provided:\n${smeAnswers.map((a, i) => `Q${i + 1}: ${a}`).join('\n')}`
@@ -78,8 +75,8 @@ Return ONLY valid JSON:
   ]
 }`;
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.7,
       response_format: { type: "json_object" },
       messages: [
