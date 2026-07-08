@@ -63,9 +63,9 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
       "title": "string",
       "subtitle": "string (one sentence framing the 3 pillars)",
       "pillars": [
-        {"icon": "emoji", "heading": "string", "body": "string (2 sentences max)"},
-        {"icon": "emoji", "heading": "string", "body": "string"},
-        {"icon": "emoji", "heading": "string", "body": "string"}
+        {"icon": "emoji", "heading": "string", "body": "string (Detailed explanation, 3-4 sentences. Be highly specific and academic. No generic summaries.)"},
+        {"icon": "emoji", "heading": "string", "body": "string (Detailed explanation)"},
+        {"icon": "emoji", "heading": "string", "body": "string (Detailed explanation)"}
       ],
       "logic": "string"
     },
@@ -74,7 +74,7 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
       "title": "string",
       "subtitle": "string (instruction)",
       "items": [
-        {"label": "string", "tip": "string (2-3 sentence actionable insight)"},
+        {"label": "string", "tip": "string (Detailed, highly specific technical insight, 3-4 sentences)"},
         {"label": "string", "tip": "string"},
         {"label": "string", "tip": "string"},
         {"label": "string", "tip": "string"}
@@ -97,7 +97,7 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
       "type": "quiz",
       "title": "string",
       "questions": [
-        {"q": "string (application question)", "options": ["string","string","string","string"], "answer": 0, "explanation": "string (teaches WHY, 2-3 sentences)"},
+        {"q": "string (complex application question)", "options": ["string","string","string","string"], "answer": 0, "explanation": "string (Detailed technical explanation teaching WHY, 3-4 sentences)"},
         {"q": "string", "options": ["string","string","string","string"], "answer": 1, "explanation": "string"},
         {"q": "string", "options": ["string","string","string","string"], "answer": 2, "explanation": "string"}
       ],

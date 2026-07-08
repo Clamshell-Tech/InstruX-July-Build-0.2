@@ -80,8 +80,8 @@ content:
   "visualStyle": "cinematic" | "illustrated" | "comic" | "3d-render" | "realistic",
   "heading": "string",
   "subtitle": "string or null",
-  "body": "STRICTLY MAX 150 CHARS. Practical explanation.",
-  "proTip": "STRICTLY MAX 100 CHARS expert callout (null if not needed)"
+  "body": "STRICTLY MAX 450 CHARS. Must be a highly detailed, specific, academic-level explanation. Provide depth and real-world context. NEVER use generic dictionary definitions.",
+  "proTip": "STRICTLY MAX 200 CHARS. Advanced expert callout or specific example (null if not needed)"
 }
 
 video:
@@ -107,18 +107,18 @@ checklist:
 { "type": "checklist", "heading": "How-To Steps", "items": ["Action 1", "Action 2", "Action 3"] }
 
 flipcards:
-{ "type": "flipcards", "heading": "Tap to reveal", "cards": [{ "front": "Concept", "back": "Definition (MAX 120 CHARS)" }] }
+{ "type": "flipcards", "heading": "Tap to reveal", "cards": [{ "front": "Concept", "back": "Highly specific, detailed technical explanation (MAX 350 CHARS). Do not use simple dictionary definitions." }] }
 
 quiz:
 { 
   "type": "quiz", 
   "challengeNum": N, 
-  "scenario": "1-sentence workplace context",
-  "question": "Application question", 
+  "scenario": "Detailed 2-3 sentence complex workplace or technical scenario context",
+  "question": "Advanced application or critical thinking question", 
   "instruction": "Tap the correct answer", 
   "options": ["A", "B", "C"], 
   "correctIndices": [0], 
-  "feedback": { "correct": "Short reinforcement", "incorrect": "Short correction" }
+  "feedback": { "correct": "In-depth explanation of WHY this is the best approach (2-3 sentences)", "incorrect": "In-depth correction explaining the flaw in this choice (2-3 sentences)" }
 }
 
 summary:

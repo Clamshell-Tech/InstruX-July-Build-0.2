@@ -68,7 +68,7 @@ Return ONLY valid JSON:
           "ref": "Source Section",
           "time": 0.5,
           "format": "Concept Card | Concept Video | Interaction Card | Scenario Card | Knowledge Check",
-          "screen": "Mobile-first description: what the user sees and taps on their phone screen."
+          "screen": "Highly detailed and specific description of the ACTUAL content covered in this card (3-4 sentences). Do not use generic phrases like 'Definition of X'. Explain exactly what specific concepts, features, or pain points will be taught."
         }
       ]
     }
