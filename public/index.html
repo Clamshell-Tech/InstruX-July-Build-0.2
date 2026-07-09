@@ -24,9 +24,13 @@
         .modal { display: none; }
         .modal.active { display: flex; }
         .instrux-gradient { background: #FFCC31; }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        @media (max-width: 640px) {
+            .hide-scrollbar-mobile::-webkit-scrollbar { display: none; }
+            .hide-scrollbar-mobile { -ms-overflow-style: none; scrollbar-width: none; }
+        }
         @keyframes progress { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         .player-fullscreen { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 1000 !important; border-radius: 0 !important; border: none !important; }
         .outline-item { animation: slideIn 0.3s ease-out forwards; }
@@ -173,7 +177,7 @@
             <div class="max-w-6xl mx-auto px-10 pt-20 pb-20 text-center">
                 <div class="inline-flex items-center px-4 py-1.5 bg-blue-50 rounded-full text-blue-600 text-xs font-bold uppercase tracking-widest mb-8">🚀 AI Course Builder</div>
                 <h1 class="text-4xl sm:text-[56px] font-extrabold text-[#0f172a] mb-6 tracking-tighter leading-tight">What would you like to <span class="text-blue-600">build today?</span></h1>
-                <div class="flex overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mt-12 pb-8 -mx-10 px-10 sm:mx-0 sm:px-0 custom-scrollbar">
+                <div class="flex overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mt-12 pb-8 -mx-10 px-10 sm:mx-0 sm:px-0 custom-scrollbar hide-scrollbar-mobile">
                     <div onclick="startWizard('generate')" class="strategy-card bg-white rounded-[32px] p-4 flex flex-col text-left shadow-sm shrink-0 w-[85vw] max-w-[320px] sm:w-auto snap-center">
                         <div class="h-48 rounded-[24px] bg-gradient-to-br from-blue-500 to-indigo-600 mb-6 flex items-center justify-center relative overflow-hidden text-white"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
                         <div class="px-4 pb-6"><h3 class="text-2xl font-extrabold text-slate-900 mb-2">Build with AI</h3><p class="text-slate-500 text-sm">Type one sentence and get a full course.</p></div>
@@ -196,6 +200,43 @@
                     <div onclick="startWizard('import')" class="strategy-card bg-white rounded-[32px] p-4 flex flex-col text-left shadow-sm shrink-0 w-[85vw] max-w-[320px] sm:w-auto snap-center">
                         <div class="h-48 rounded-[24px] bg-gradient-to-br from-orange-400 to-rose-500 mb-6 flex items-center justify-center text-white"><svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></div>
                         <div class="px-4 pb-6"><h3 class="text-2xl font-extrabold text-slate-900 mb-2">Upload & Rebuild</h3><p class="text-slate-500 text-sm">Bring in an old course and refresh it.</p></div>
+                    </div>
+                </div>
+
+                <!-- Recent Projects Placeholder to fill empty space elegantly -->
+                <div class="mt-10 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-200/60 text-left w-full max-w-4xl mx-auto">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Jump back in</h3>
+                        <button class="text-[11px] font-bold text-blue-600 hover:text-blue-700 uppercase tracking-widest">View all →</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-[24px] border border-slate-100 bg-white shadow-sm flex items-center justify-between cursor-pointer hover:border-blue-300 hover:shadow-md transition-all">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-[18px] bg-blue-50 flex items-center justify-center text-blue-600 font-black text-lg">L</div>
+                                <div>
+                                    <p class="text-sm font-extrabold text-slate-900 leading-tight">Leadership 101</p>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Edited 2 hrs ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-[24px] border border-slate-100 bg-white shadow-sm flex items-center justify-between cursor-pointer hover:border-blue-300 hover:shadow-md transition-all">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-[18px] bg-amber-50 flex items-center justify-center text-amber-500 font-black text-lg">S</div>
+                                <div>
+                                    <p class="text-sm font-extrabold text-slate-900 leading-tight">Sales Onboarding</p>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Edited 1 day ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-[24px] border border-slate-100 bg-white shadow-sm flex items-center justify-between cursor-pointer hover:border-blue-300 hover:shadow-md transition-all">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-[18px] bg-emerald-50 flex items-center justify-center text-emerald-500 font-black text-lg">C</div>
+                                <div>
+                                    <p class="text-sm font-extrabold text-slate-900 leading-tight">Compliance Q3</p>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Edited 3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
