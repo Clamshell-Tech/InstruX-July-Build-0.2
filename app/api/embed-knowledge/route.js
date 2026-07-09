@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { openai, supabase } from '../../../lib/ai';
+import { getOpenAI, getSupabase } from '../../../lib/ai';
 
 // This route is called ONCE to load your ID knowledge base into Supabase
 // After that, it sits in the database and gets searched automatically
@@ -21,7 +21,7 @@ export async function POST(request) {
 
     for (const chunk of chunks) {
       // Convert each chunk of text into a vector
-      const embeddingResponse = await openai.embeddings.create({
+      const embeddingResponse = await getOpenAI().embeddings.create({
         model: 'text-embedding-3-small',
         input: chunk.content,
       });
@@ -29,7 +29,7 @@ export async function POST(request) {
       const embedding = embeddingResponse.data[0].embedding;
 
       // Store the text + its vector in Supabase
-      const { data, error } = await supabase
+      const { data, error } = await getSupabase()
         .from('id_knowledge')
         .insert({
           content: chunk.content,

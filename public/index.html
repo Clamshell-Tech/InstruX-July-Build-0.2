@@ -271,15 +271,7 @@
                         <span id="credit-count" class="text-[10px] font-black text-slate-700">—</span>
                         <span class="text-[9px] font-semibold text-slate-500">credits</span>
                     </div>
-                    <div class="flex -space-x-2">
-                        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[9px] font-black text-white" style="border-color:#FFCC31;background:#1e3a8a;" title="Sarah R.">SR</div>
-                        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[9px] font-black text-white" style="border-color:#FFCC31;background:#7c3aed;" title="Marcus K.">MK</div>
-                        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[9px] font-black text-white" style="border-color:#FFCC31;background:#0d9488;" title="Aisha L.">AL</div>
-                    </div>
-                    <div class="flex items-center space-x-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span>
-                        <span class="text-[10px] font-bold text-slate-600">3 online</span>
-                    </div>
+
                     <button onclick="openSharePanel()" class="px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-700 transition-all hover:bg-black/15" style="background:rgba(0,0,0,0.1);">Share</button>
                     <div class="w-px h-5 bg-black/10"></div>
                     <button class="px-5 py-2.5 bg-slate-900 text-white rounded-2xl font-bold text-sm">Export</button>
@@ -2557,6 +2549,10 @@
         }
 
         function startWizard(mode) {
+            if (mode === 'template' || mode === 'import') {
+                alert("This feature is coming soon in Phase 2!");
+                return;
+            }
             document.getElementById('step-0').classList.remove('active');
             document.getElementById('main-sidebar').classList.remove('hidden');
             document.getElementById('wizard-ui').classList.remove('hidden');
@@ -2564,8 +2560,6 @@
             loadCredits();
             if (mode === 'paste') {
                 showModePaste();
-            } else if (mode === 'import') {
-                showImportScreen();
             } else {
                 updateWizardState(1);
             }
