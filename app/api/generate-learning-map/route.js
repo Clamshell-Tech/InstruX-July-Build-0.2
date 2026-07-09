@@ -68,7 +68,7 @@ Return ONLY valid JSON:
           "ref": "Source Section",
           "time": 0.5,
           "format": "Concept Card | Concept Video | Interaction Card | Scenario Card | Knowledge Check",
-          "screen": "Highly detailed and specific description of the ACTUAL content covered in this card (3-4 sentences). Do not use generic phrases like 'Definition of X'. Explain exactly what specific concepts, features, or pain points will be taught."
+          "screen": "Highly detailed and specific description of the ACTUAL content covered in this card (4-5 sentences). Explain exactly what specific technical concepts, architectural components, or deep frameworks will be taught. DO NOT use generic phrases like 'Definition of X' or high-level summaries."
         }
       ]
     }

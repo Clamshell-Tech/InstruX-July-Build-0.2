@@ -37,11 +37,11 @@ VISUAL STYLE RULES (set 'visualStyle' on every canva-ai card — pick the one th
 
 Examples: "Sales conversation skills" → cinematic | "Cloud architecture diagram" → 3d-render | "Fire safety evacuation" → comic | "Quarterly revenue growth" → illustrated | "Lab sample handling" → realistic
 
-ANTI-HALLUCINATION RULES (enforced when structured knowledge is provided):
+ANTI-HALLUCINATION & ANTI-GENERIC RULES (enforced when structured knowledge is provided):
 - Every fact, number, name, threshold, or procedure in a slide MUST come from the verified knowledge below.
-- DO NOT use general knowledge about this topic. If the knowledge doesn't cover it, don't include it.
-- Quiz scenarios and distractors must reflect real situations from the source, not invented ones.
-- Content not grounded in the verified knowledge = a failed course.
+- NO DICTIONARY DEFINITIONS or high-level generic summaries (e.g., 'Used by data engineers for efficient processing').
+- ALWAYS provide highly technical, data-dense, and deep architectural/expert explanations.
+- Explain the 'HOW' and 'WHY' with specific mechanisms, frameworks, or advanced use cases.
 
 RELEVANT ID METHODOLOGY FROM YOUR KNOWLEDGE BASE:
 ${knowledge}
@@ -80,7 +80,7 @@ content:
   "visualStyle": "cinematic" | "illustrated" | "comic" | "3d-render" | "realistic",
   "heading": "string",
   "subtitle": "string or null",
-  "body": "STRICTLY MAX 450 CHARS. Must be a highly detailed, specific, academic-level explanation. Provide depth and real-world context. NEVER use generic dictionary definitions.",
+  "body": "STRICTLY MAX 600 CHARS. Must be a hyper-specific, data-dense, technical explanation. Include architectural details, frameworks, or advanced expert context. NEVER use generic dictionary definitions or high-level summaries.",
   "proTip": "STRICTLY MAX 200 CHARS. Advanced expert callout or specific example (null if not needed)"
 }
 
@@ -107,7 +107,7 @@ checklist:
 { "type": "checklist", "heading": "How-To Steps", "items": ["Action 1", "Action 2", "Action 3"] }
 
 flipcards:
-{ "type": "flipcards", "heading": "Tap to reveal", "cards": [{ "front": "Concept", "back": "Highly specific, detailed technical explanation (MAX 350 CHARS). Do not use simple dictionary definitions." }] }
+{ "type": "flipcards", "heading": "Tap to reveal", "cards": [{ "front": "Concept", "back": "Highly specific, data-dense technical explanation of the 'how' and 'why' (MAX 450 CHARS). NEVER use generic overviews or dictionary definitions." }] }
 
 quiz:
 { 
@@ -118,7 +118,7 @@ quiz:
   "instruction": "Tap the correct answer", 
   "options": ["A", "B", "C"], 
   "correctIndices": [0], 
-  "feedback": { "correct": "In-depth explanation of WHY this is the best approach (2-3 sentences)", "incorrect": "In-depth correction explaining the flaw in this choice (2-3 sentences)" }
+  "feedback": { "correct": "In-depth technical explanation of the underlying mechanism or architecture (2-3 sentences)", "incorrect": "In-depth technical correction explaining the flaw or missing knowledge (2-3 sentences)" }
 }
 
 summary:
