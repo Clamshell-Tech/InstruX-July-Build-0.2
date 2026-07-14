@@ -296,12 +296,21 @@ export async function POST(request) {
       images = await ocrImages(images);
     }
 
-    // Use vision text if it's richer than what pdf-parse got
+    // Merge vision-transcribed text back into main context (per product spec)
+    // OCR text is always merged — not just used when it's longer than the parsed text.
+    // This ensures infographics, flowcharts, and scanned slides all reach the AI generator.
     if (images.length) {
       const ocrBody = images.map(img => img.ocrText || '').filter(Boolean).join('\n\n');
-      if (ocrBody.trim() && ocrBody.length > text.length) {
-        text = ocrBody;
+      if (ocrBody.trim()) {
+        if (!text.trim()) {
+          // No text at all from parser → OCR is the only source
+          text = ocrBody;
+        } else {
+          // Both sources have content → merge them so AI sees everything
+          text = `${text}\n\n--- Extracted from embedded images ---\n\n${ocrBody}`;
+        }
       } else if (!text.trim()) {
+        // OCR ran but got nothing AND parser got nothing → hard fail
         if (ext === 'pptx' || ext === 'ppt') {
           throw new Error('No text found in presentation. The file may be image-only or password-protected.');
         } else if (ext === 'pdf') {
@@ -309,6 +318,7 @@ export async function POST(request) {
         }
       }
     }
+
 
     text = text.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
     const truncated = text.length > 100000;
