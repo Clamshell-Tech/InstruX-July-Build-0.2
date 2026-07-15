@@ -526,7 +526,8 @@ export default function TextInputWizard({ onComplete }) {
                   <span style={{ color: 'var(--color-accent)', fontWeight: 800 }}>in under 60 seconds.</span>
                 </p>
               </div>
-              <p className="text-[9px] font-black uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-muted)' }}>What happens next</p>
+              <div className="hidden lg:block">
+                <p className="text-[9px] font-black uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-muted)' }}>What happens next</p>
               <div className="relative">
                 <div className="absolute left-[10px] top-6 bottom-6 w-px"
                   style={{ background: 'linear-gradient(to bottom, rgba(255,204,49,0.4), rgba(255,204,49,0.1))' }} />
@@ -554,6 +555,7 @@ export default function TextInputWizard({ onComplete }) {
                       <p className="text-[11px] font-black text-[var(--color-text-main)] mb-0.5">Learning Strategy</p>
                       <p className="text-[10px] leading-snug" style={{ color: 'var(--color-text-muted)' }}>Microlearning, Scenario-Based, or Case Study</p>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>

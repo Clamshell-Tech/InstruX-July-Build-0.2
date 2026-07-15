@@ -150,7 +150,7 @@ export default function InstruXReactApp() {
     else if (currentView === 'player') { step = 5; title = "Course Player"; }
 
     return (
-      <div className="flex flex-col h-screen font-sans overflow-hidden" style={{ backgroundColor: 'var(--color-bg)' }}>
+      <div className="flex flex-col h-[100dvh] font-sans overflow-hidden" style={{ backgroundColor: 'var(--color-bg)' }}>
         <WizardHeader 
           step={step} 
           title={title} 
