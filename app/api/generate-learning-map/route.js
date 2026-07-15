@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getGroq, KB_CONTEXT } from '../../../lib/ai';
+import { safeGroqJsonCall, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -75,26 +75,18 @@ Return ONLY valid JSON:
   ]
 }`;
 
-    const completion = await getGroq().chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      temperature: 0.7,
-      response_format: { type: "json_object" },
-      messages: [
+    let result;
+    try {
+      const messages = [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: structuredFacts
             ? `VERIFIED KNOWLEDGE EXTRACTED FROM SOURCE (STRICT GROUNDING — every card ref must cite a specific item from this list):\nConcepts: ${structuredFacts.concepts?.slice(0,10).join(' | ')}\nProcedures: ${structuredFacts.procedures?.slice(0,8).join(' | ')}\nRules: ${structuredFacts.rules?.slice(0,8).join(' | ')}\nKey Facts: ${structuredFacts.keyFacts?.slice(0,10).join(' | ')}\nExamples: ${structuredFacts.examples?.slice(0,5).join(' | ')}\nContent Gaps addressed by SME: ${structuredFacts.contentGaps?.slice(0,4).join(' | ') || 'none'}\nSource Bloom\'s Level: ${structuredFacts.bloomsLevel || 'Apply / Analyse'}`
             : `Source content:\n${(content || '').substring(0, 4000)}` }
-      ]
-    });
-
-    const raw = completion.choices[0].message.content;
-
-    let result;
-    try {
-      result = JSON.parse(raw);
+      ];
+      result = await safeGroqJsonCall(messages, 7000, 0.7);
     } catch (e) {
-      console.error('JSON parse error in generate-learning-map:', e, raw);
-      return NextResponse.json({ error: 'AI returned invalid JSON' }, { status: 500 });
+      console.error('All retries failed in generate-learning-map:', e);
+      return NextResponse.json({ error: 'AI returned invalid JSON after retries' }, { status: 500 });
     }
 
     return NextResponse.json(result);

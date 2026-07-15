@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getGroq, KB_CONTEXT } from '../../../lib/ai';
+import { safeGroqJsonCall, KB_CONTEXT } from '../../../lib/ai';
 
 export async function POST(request) {
   try {
@@ -140,30 +140,21 @@ ${modulesText}
 Generate all slides following the structure: cover → objectives → [module-title → content slides → flipcards → quiz] × ${modules.length} → summary.
 Return ONLY the JSON array.`;
 
-    const completion = await getGroq().chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      temperature: 0.7,
-      max_tokens: 7000,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: 'system', content: systemPrompt + '\n\nIMPORTANT: You must return a valid JSON object with a single property named "slides" that contains the array of card objects.' },
-        { role: 'user', content: userMessage }
-      ]
-    });
-
-    const raw = completion.choices[0].message.content.trim();
-
     let slides;
     try {
-      const parsedData = JSON.parse(raw);
+      const messages = [
+        { role: 'system', content: systemPrompt + '\n\nIMPORTANT: You must return a valid JSON object with a single property named "slides" that contains the array of card objects.' },
+        { role: 'user', content: userMessage }
+      ];
+      const parsedData = await safeGroqJsonCall(messages, 7000, 0.7);
       slides = parsedData.slides || parsedData; 
       
       if (!Array.isArray(slides)) {
         throw new Error('Parsed JSON does not contain an array of slides');
       }
     } catch (e) {
-      console.error('JSON parse error:', e.message, '\nRaw:', raw.substring(0, 500));
-      return NextResponse.json({ error: 'AI returned invalid JSON', details: e.message }, { status: 500 });
+      console.error('All retries failed in build-microlearning:', e.message);
+      return NextResponse.json({ error: 'AI returned invalid JSON after retries', details: e.message }, { status: 500 });
     }
 
     // --- Image Generation (Canva AI — brand-consistent, high quality) ---
