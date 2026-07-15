@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import MobilePreviewPlayer from '../components/MobilePreviewPlayer';
-import HomeDashboard from '../components/HomeDashboard';
-import TextInputWizard from '../components/TextInputWizard';
-import SMEQuestionEngine from '../components/SMEQuestionEngine';
-import StrategySelector from '../components/StrategySelector';
-import LearningMap from '../components/LearningMap';
-import CoursePlayer from '../components/CoursePlayer';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import MobilePreviewPlayer from './components/MobilePreviewPlayer';
+import HomeDashboard from './components/HomeDashboard';
+import TextInputWizard from './components/TextInputWizard';
+import SMEQuestionEngine from './components/SMEQuestionEngine';
+import StrategySelector from './components/StrategySelector';
+import LearningMap from './components/LearningMap';
+import CoursePlayer from './components/CoursePlayer';
 
 function WizardHeader({ step, title, onBack, theme, setTheme }) {
   // Exact pcts from original showIDScreen: 1:10%, 2:30%, 3:55%, 4:75%, 5:100%
@@ -74,7 +74,7 @@ function WizardHeader({ step, title, onBack, theme, setTheme }) {
     </div>
   );
 }
-import InstantAIWizard from '../components/InstantAIWizard';
+import InstantAIWizard from './components/InstantAIWizard';
 
 export default function InstruXReactApp() {
   const [currentView, setCurrentView] = useState('home');
