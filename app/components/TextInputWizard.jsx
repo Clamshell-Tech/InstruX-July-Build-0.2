@@ -496,7 +496,7 @@ export default function TextInputWizard({ onComplete }) {
 
       {/* ── LEFT PANEL — Navy ── */}
       <div
-        className="no-scrollbar flex flex-col justify-between p-6 pb-12 lg:pb-24 lg:p-10 w-full lg:w-[38%] shrink-0 lg:h-full"
+        className="hidden lg:flex no-scrollbar flex-col justify-between p-10 w-[38%] shrink-0 h-full"
         style={{ background: 'var(--color-surface)', overflowY: 'auto' }}
       >
         <div className="flex-1">
@@ -626,7 +626,7 @@ export default function TextInputWizard({ onComplete }) {
       </div>
 
       {/* ── RIGHT PANEL — Yellow ── */}
-      <div className="no-scrollbar flex flex-col justify-start px-4 py-6 lg:px-10 lg:py-6 flex-1 lg:h-full pb-32 lg:pb-6"
+      <div className="no-scrollbar flex flex-col justify-between px-4 py-6 lg:px-10 lg:py-6 flex-1 h-full pb-8 lg:pb-6"
         style={{ background: 'var(--color-bg)', overflowY: 'auto' }}>
         <div className="space-y-3 w-full">
 
